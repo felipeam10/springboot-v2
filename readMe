@@ -1,0 +1,115 @@
+v1
+
+	para criar um projeto com Spring Boot, utilizamos o Spring Initialzr, através do site https://start.spring.io;
+	para criar um controller, utilizamos as anotações @Controller e @RequestMapping.
+	
+------------------------------------------------------------------------------------------------------------------------
+
+v2
+
+	para um método no controller não encaminhar a requisição a uma página JSP, ou Thymeleaf, devemos utilizar a anotação @ResponseBody;
+	o Spring, por padrão, converte os dados no formato JSON, utilizando a biblioteca Jackson;
+	para não repetir a anotação @ResponseBody em todos os métodos do controller, devemos utilizar a anotação @RestController;
+	para não precisar reiniciar manualmente o servidor a cada alteração feita no código, basta utilizar o módulo Spring Boot DevTools;
+	não é uma boa prática retornar entidades JPA nos métodos dos controllers, sendo mais indicado retornar classes que seguem o padrão DTO (Data Transfer Object);
+	
+	
+------------------------------------------------------------------------------------------------------------------------
+
+v3 
+
+	criado o banco de dados "forum"
+	
+	Filtros: http://localhost:8080/topicos?nomeCurso=Spring
+	
+	
+		O Spring data, na interface Repository também tem algumas facilidades nesse caso, se você quiser filtrar por algum parâmetro. 
+		A ideia é: não vamos mais utilizar o findAll(). 
+		Vamos utilizar outro método. Aí, o Spring Data tem um padrão de nomenclatura. 
+		Se você seguir esse padrão, ele consegue gerar a Query para você automaticamente. 
+		O padrão de nomenclatura seria findBy() e o nome do atributo na entidade (do atributo que você quer filtrar). 
+		Por exemplo, imagine que quero filtrar pelo Titulo, o nome do método seria findByTitulo(nomeCurso) e eu passaria o parâmetro que representa esse atributo.
+		
+		na classe Curso temos um atributo nome 
+		como que fazemos para filtrar nao por um atributo da entidade? no caso a entidade topico
+		mas quero filtrar por um atributo que eh de um relacionamento que eh da minha entidade ?
+		para que o spring filtre, precisa montar da seguinte maneira: findBy + Curso + Nome
+		curso eh a entidade de relacionamento
+		nome eh o atributo dentro desta entidade de relacionamento 
+		
+		
+		no banco:
+		
+		id|categoria  |nome       |
+		--|-----------|-----------|
+		 1|Programação|Spring Boot|
+		 2|Front-end  |HTML 5     |
+		
+		http://localhost:8080/topicos?nomeCurso=Spring+Boot
+		vai retornar:
+		[
+			{
+				"id": 1,
+				"titulo": "Dúvida",
+				"mensagem": "Erro ao criar projeto",
+				"dataCriacao": "2019-05-05T18:00:00"
+			},
+			{
+				"id": 2,
+				"titulo": "Dúvida 2",
+				"mensagem": "Projeto não compila",
+				"dataCriacao": "2019-05-05T19:00:00"
+			}
+		]
+	
+	
+		http://localhost:8080/topicos?nomeCurso=HTML+5
+		
+		vai retornar:
+		[
+			{
+				"id": 3,
+				"titulo": "Dúvida 3",
+				"mensagem": "Tag HTML",
+				"dataCriacao": "2019-05-05T20:00:00"
+			}
+		]
+		
+		Para mapear as classes de domínio da aplicação como entidade JPA, 
+devemos utilizar as anotações @Entity, @Id, @GeneratedValue, @ManyToOne, @OneToMany e 
+@Enumerated;
+		
+------------------------------------------------------------------------------------------------------------------------
+
+v4
+
+	para evitar repetir a URL em todos os métodos, devemos utilizar a anotação @RequestMapping em cima da classe controller;
+	
+	para mapear requisições do tipo POST, devemos utilizar a anotação @PostMapping;
+	
+	para receber dados enviados no corpo da requisição, a boa prática é criar uma classe que também siga o padrão DTO (Data Transfer Object);
+	
+	a boa prática para métodos que cadastram informações é devolver o código HTTP 201, ao invés do código 200;
+	
+	para montar uma resposta a ser devolvida ao cliente da API, devemos utilizar a classe ResponseEntity do Spring;
+	
+	
+------------------------------------------------------------------------------------------------------------------------
+
+v5
+
+	para fazer validações das informações enviadas pelos clientes da API, podemos utilizar a especificação Bean Validation, com as anotações @NotNull, @NotEmpty, @Size, dentre outras;
+	para o Spring disparar as validações do Bean Validation e devolver um erro 400, caso alguma informação enviada pelo cliente esteja inválida, devemos utilizar a anotação @Valid;
+	para interceptar as exceptions que forem lançadas nos métodos das classes controller, devemos criar uma classe anotada com @RestControllerAdvice;
+	para tratar os erros de validação do Bean Validation e personalizar o JSON, que será devolvido ao cliente da API, com as mensagens de erro, devemos criar um método na classe @RestControllerAdvice e anotá-lo com @ExceptionHandler e @ResponseStatus.
+
+------------------------------------------------------------------------------------------------------------------------
+
+v6
+	Para receber parâmetros dinâmicos no path da URL, devemos utilizar a anotação @PathVariable;
+	Para mapear requisições do tipo PUT, devemos utilizar a anotação @PutMapping;
+	Para fazer o controle transacional automático, devemos utilizar a anotação @Transactional nos métodos do controller;
+	Para mapear requisições do tipo DELETE, devemos utilizar a anotação @DeleteMapping;
+	Para tratar o erro 404 na classe controller, devemos utilizar o método findById, ao invés do método getOne, e utilizar a classe ResponseEntity para montar a resposta de not found;
+	O método getOne lança uma exception quando o id passado como parâmetro não existir no banco de dados;
+	O método findById retorna um objeto Optional<>, que pode ou não conter um objeto.
