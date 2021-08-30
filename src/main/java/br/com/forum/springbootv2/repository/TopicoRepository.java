@@ -2,13 +2,15 @@ package br.com.forum.springbootv2.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import br.com.forum.springbootv2.modelo.Topico;
 
 public interface TopicoRepository extends JpaRepository<Topico, Long>{
 
-	List<Topico> findByCursoNome(String nomeCurso); //eh soh declarar a assinatura do metodo que o spring data gera a consulta. Nao precisa montar a query manualmente 
+	Page<Topico> findByCursoNome(String nomeCurso, Pageable paginacao); //eh soh declarar a assinatura do metodo que o spring data gera a consulta. Nao precisa montar a query manualmente
 		//na classe Curso temos um atributo nome 
 		//como que fazemos para filtrar nao por um atributo da entidade? no caso a entidade topico
 		//mas quero filtrar por um atributo que eh de um relacionamento que eh da minha entidade ?
