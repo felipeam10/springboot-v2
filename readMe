@@ -1,7 +1,7 @@
 v1
 
     postman: GET http://localhost:8080/topicos?pagina=0&qtd=1
-
+    postman ordenacao: GET http://localhost:8080/topicos?pagina=0&qtd=3&ordenacao=mensagem
          
 	
 ------------------------------------------------------------------------------------------------------------------------
