@@ -1,8 +1,14 @@
 v1
 
-    postman: GET http://localhost:8080/topicos?pagina=0&qtd=1
-    postman ordenacao: GET http://localhost:8080/topicos?pagina=0&qtd=3&ordenacao=mensagem
-         
-	
+v1.2    postman: GET http://localhost:8080/topicos?pagina=0&qtd=1
+v1.3    postman ordenacao: GET http://localhost:8080/topicos?pagina=0&qtd=3&ordenacao=mensagem
+v1.4    postman simple pagin orden: GET http://localhost:8080/topicos?page=0&size=4&sort=id,asc
+
+
+    Para realizar paginação com Spring Data JPA, devemos utilizar a interface Pageable;
+    Nas classes Repository, os métodos que recebem um pageable como parâmetro retornam objetos do tipo Page<>, ao invés de List<>;
+    Para o Spring incluir informações sobre a paginação no JSON de resposta enviado ao cliente da API, devemos alterar o retorno do método do controller de List<> para Page<>;
+    Para fazer a ordenação na consulta ao banco de dados, devemos utilizar também a interface Pageable, passando como parâmetro a direção da ordenação, utilizando a classe Direction, e o nome do atributo para ordenar;
+    Para receber os parâmetros de ordenação e paginação diretamente nos métodos do controller, devemos habilitar o módulo SpringDataWebSupport, adicionando a anotação @EnableSpringDataWebSupport na classe SpringbootV2Application.java.
 ------------------------------------------------------------------------------------------------------------------------
 
