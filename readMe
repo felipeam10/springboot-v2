@@ -73,6 +73,8 @@ v6
 
 v7
 
+    para acessar o swagger: http://localhost:8080/swagger-ui.html#/
+
     Para documentar a nossa API Rest, podemos utilizar o Swagger, com o módulo SpringFox Swagger;
     Para utilizar o SpringFox Swagger na API, devemos adicionar suas dependências no arquivo pom.xml;
     Para habilitar o Swagger na API, devemos adicionar a anotação @EnableSwagger2 na classe ForumApplication;
