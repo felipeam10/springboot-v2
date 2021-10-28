@@ -58,6 +58,7 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 //  configuracoes de recursos estaticos(js, css, imagens. etc)
     @Override
     public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/**.html", "/v2/api-docs", "/webjars/**", "/configuration/**", "/swagger-resources/**");
     }
     /* mostra a senha gerada pelo BCrypt
     public static void main(String[] args) {
